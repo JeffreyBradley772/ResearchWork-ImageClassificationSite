@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+<div class="container">
+    <h1>Prediction</h1>
+    <ul>
+
+        {% for item in data %}
+            <li style= "font-size: x-large;">{{item.Pred}}</li>
+            <!-- <img src="{{ uri }}" class="img-thumbnail" alt="..."> -->
+            <!-- <img src="{{ item.Image }}" class="img-thumbnail" alt="..."> -->
+        {% endfor %}
+        </ul>
+    
+</div>
+
+<div class="container">
+    <h3>Classify another image?</h3>
+    <p><a href=import ><button type = reset class=blue style="height:75px;width:100px">Classify again</button></a></p>
+    
+</div>
+
+{% endblock %}
