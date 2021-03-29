@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container" id="contact">
+    <h2>Have feedback? Send us your comments!</h2>
+    <div class="row">
+        <div class="col">
+          <form action="https://formspree.io/f/mnqlaynp" method="POST">
+          
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input name = "email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+                  <label for="exampleInputName1" class="form-label">Name</label>
+                  <input name = "name" type="text" class="form-control" id="name" aria-describedby="exampleInputName1">
+              </div>
+              <div class="mb-3">
+                  <label for="floatingTextarea2">Comments</label>
+                  <textarea name = "comments" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                  
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

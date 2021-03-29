@@ -1,16 +1,28 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+
     
 <div class="container">
-    <h1>Photo Input</h1>
+    <h2>Import a photo to be classified</h2>
     <form method = "POST" action = "/upload" enctype="multipart/form-data">
-    <div class = "form-group">
-        <label for="inputFile">File Input</label>
-        <input type="file" name = "inputFile">
-    </div>
-    <button type="submit" class = "btn btn-default"> Submit</button>
+        <div class = "form-group">
+            <label for="inputFile">File Input</label>
+            <input type="file" name = "inputFile" multiple="">
+        </div>
+      <button type="submit" class = "btn btn-default"> Classify</button>
     </form>
 </div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
 
 {% endblock %}

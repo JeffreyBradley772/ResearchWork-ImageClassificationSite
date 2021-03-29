@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="alert alert-primary" role="alert">
+    No file found. <a href="/upload" class="alert-link">Click to dismiss.</a>
+</div>
+    
+<div class="container">
+    <h1>Photo Input</h1>
+    <form method = "POST" action = "/upload" enctype="multipart/form-data">
+    <div class = "form-group">
+        <label for="inputFile">File Input</label>
+        <input type="file" name = "inputFile">
+    </div>
+    <button type="submit" class = "btn btn-default"> Submit</button>
+    </form>
+</div>
+
+{% endblock %}

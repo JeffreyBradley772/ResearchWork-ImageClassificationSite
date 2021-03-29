@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 
 
 application = Flask(__name__)
+
+application.secret_key = b'Ovarian'
 from application import routes
 
 

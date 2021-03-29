@@ -1,5 +1,5 @@
 from application import application
-from flask import render_template,request
+from flask import render_template,request, flash, redirect, url_for, session
 from PIL import Image
 from preprocessing import read_data, preprocess_data, get_pipe, get_image
 from sklearn.linear_model import SGDClassifier
@@ -38,12 +38,15 @@ from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline as Pipe
 from joblib import dump, load
 import sys
+from datetime import datetime
 
 from classifiers import classify_structure
 from preprocessing import get_pipe
 
-from base64 import b64encode
 
+
+global classifications
+classifications = {}
 
 
 clf = load('classifier.joblib')
@@ -56,43 +59,70 @@ def index():
 
 
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','tif'])
 
 def allowed_file(filename):
+    print(filename)
     print("here-1")
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @application.route('/upload', methods = ['POST', 'GET'])
 def upload():
-    file = request.files['inputFile']
-    im = resize(io.imread(file), (64, 64))
-    encoded = b64encode(im)
-    encoded = encoded.decode('ascii')
-    mime = "image/jpeg"
-    uri = "data:%s;base64,%s" % (mime, encoded)
-    #print(uri)
-    
- 
+    files = request.files.getlist("inputFile")
     
 
-    pred_dict = {0: 'CL', 1: 'Cyst', 2: 'Follicle', 3: 'GF'}
-    print("Loading saved classifier")
-    #clf = load(clf_filename)
-    print("Processing image and making prediction")
-    img = []
-    img.append(im)
-    pipeline = get_pipe()
-    pipeline.steps.append(("classifier", clf))
-    prediction = int(pipeline.predict(img))
-    #print("Prediction for %s: %s" % (im, pred_dict[prediction]))
-    data = [{"Pred":pred_dict[prediction], "Image":uri}]
-    print(str(pred_dict[prediction]))
     
-    return render_template('class.html', data = data, uri = uri)
+
+    flash('Classifying...')
+    session.pop('_flashes', None)
+    for f in files:
+        print(f,"FILE")
+        if not allowed_file(f.filename):
+            flash(' Invalid file')
+            return redirect(url_for('import1'))
+
+        
+
+
+        im = resize(io.imread(f), (64, 64))
+
+        
+        pred_dict = {0: 'CL', 1: 'Cyst', 2: 'Follicle', 3: 'GF'}
+
+        img = []
+        img.append(im)
+        pipeline = get_pipe()
+        pipeline.steps.append(("classifier", clf))
+        prediction = int(pipeline.predict(img))
+
+        now = datetime.now()
+        dt_string = now.strftime("%H:%M:%S %m/%d/%Y ")
+
+        classifications[len(classifications)+1] = (f.filename,pred_dict[prediction],dt_string)
+        print(classifications)
+        data = [{"Pred":pred_dict[prediction]}]
+        print(str(pred_dict[prediction]))
+    df = pd.DataFrame.from_dict(classifications, orient='index', columns=['File Name','Classification','Time'])
+    return render_template('class.html', data = df.to_html(classes='table table-striped'))
     
 
 @application.route('/import', methods = ['POST', 'GET'])
 def import1():
     return render_template('upload.html')
-    
+
+@application.route('/clear', methods = ['POST','GET'])
+def clear():
+    global classifications
+    classifications = {}
+    df = pd.DataFrame.from_dict(classifications, orient='index', columns=['File Name','Classification','Time'])
+    return render_template('class.html', data = df.to_html(classes='table table-striped'))
+
+
+@application.route('/about')
+def about():
+    return render_template('about.html')
+
+@application.route('/contact')
+def contact():
+    return render_template('contact.html')

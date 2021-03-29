@@ -1,3 +1,47 @@
+h1{ 
+    font-size: 2.5em;
+    line-height: 1.25em;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 1.75em;
+    font-weight: bold; 
+  }
+  
+  h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+  }
+  
+  h1, h2, h3 {
+    font-family: "Raleway", "Palatino Linotype", "Palatino", "Times New Roman", serif; 
+    letter-spacing: 1px;
+    word-spacing: .1em;
+  }
+  
+  h1, h2 {
+    margin: .2em auto;
+  }
+
+.container, main .container-fluid{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+    height: 142px; /* .push must be the same height as .footer */
+    text-align: center;
+}
+
+
 * {
     box-sizing: border-box;
 }
@@ -15,12 +59,32 @@ body {
     margin:0px;
 }
 
+.image-type{
+  display: inline-block;
+  vertical-align: top;
+  width: 24.5%;
+  height: 650px;
+  padding: 1em;
+  margin-top: 0;
+  margin-bottom:0;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+ion-icon {
+    font-size: 64px;
+  }
+
 header {
     text-align: center;
 }
 
+ul {
+    list-style: none;
+}
+
 li {
-    display: inline;
+    display: inline-table;
     padding: 5px;
 }
 
@@ -75,11 +139,24 @@ input[type=text]:focus, input[type=password]:focus {
 }
 footer {
     text-align: center;
+    position:absolute;
     height: 50px;
     color: white;
     padding: 5px;
     margin-top: 10px;
     bottom: 0px;
+}
+
+.column {
+    float: left;
+    width: 100%;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .btn-submit {
@@ -96,3 +173,49 @@ footer {
     opacity: 1;
 }
 
+/* speakers page */
+.speakerblock{ 
+    margin-bottom: 3em;
+  }
+  .speakerbio{ 
+    padding-right: 3em;
+    margin-top: 1em;
+  }
+  .speakerphoto{ 
+    border: 1px solid rgba(63, 37, 32, .25);
+    padding: none;
+    text-align: center;
+    font-family: "Raleway";
+    margin-top: 85px;
+    margin-bottom: 2em;
+  }
+  .speakerphoto img { 
+    border-radius: 50%; 
+    height: 150px;
+    width: 150px;
+    margin-top: -75px;
+    object-fit: cover;
+  }
+  
+  .speakersocial{ 
+    padding: 1em;
+  }
+  .speakersocial a { 
+    color: unset; 
+  }
+  .speakersample .speakerphoto { 
+    border: none;
+  }
+
+  .image-type {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 1.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin: 0 auto;
+    background-color: rgb(140, 155, 196);
+    color: #000000;
+    height: 300px;
+    border-radius: 3px;
+}
